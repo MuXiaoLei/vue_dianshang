@@ -8,6 +8,23 @@ import Register from '@/pages/Register'
 import Login from '@/pages/Login'
 import Search from '@/pages/Search'
 
+let originPush = VueRouter.prototype.push;
+let originReplace = VueRouter.prototype.replace
+/* 重写push方法 */
+VueRouter.prototype.push = function(location,res,rej){
+    if(res && rej){
+        originPush.call(this,location,res,rej);
+    }else{
+        originPush.call(this,location,()=>{},()=>{});
+    }
+}
+VueRouter.prototype.replace = function(location,res,rej){
+    if(res && rej){
+        originReplace.call(this,location,res,rej);
+    }else{
+        originReplace.call(this,location,()=>{},()=>{});
+    }
+}
 
 export default new VueRouter({
     routes:[
@@ -22,7 +39,8 @@ export default new VueRouter({
             meta:{show:false},
         },
         {
-            path:'/search',
+            name:'search',
+            path:'/search/:keyword?',
             component:Search,
             meta:{show:true},
         },

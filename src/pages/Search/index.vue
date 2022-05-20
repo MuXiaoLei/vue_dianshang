@@ -1,6 +1,6 @@
 <template>
     <div>
-        Search
+        <typeNav/>
     </div>
 </template>
 

@@ -37,6 +37,7 @@
                         type="text"
                         id="autocomplete"
                         class="input-error input-xxlarge"
+                        v-model="keyword"
                     />
                     <button class="sui-btn btn-xlarge btn-danger" type="button" @click="toSearch">
                         搜索
@@ -50,9 +51,26 @@
 <script>
 export default {
     name: "HeadTop",
+    data() {
+        return {
+            keyword: '',
+        };
+    },
     methods: {
         toSearch() {
-            this.$router.push('/search')
+            console.log(this.keyword);
+            console.log(this.$route.query);
+            
+            if(this.$route.query){
+                let loction = {
+                    name:'search',
+                    params:{ keyword:this.keyword || undefined }
+                };
+                /* console.log(this.loction); */
+                loction.query = this.$route.query;
+                // console.log(loction);
+                this.$router.push(loction);
+            }
         },
     },
 };

@@ -5,19 +5,16 @@
                 <!--banner轮播-->
                 <div class="swiper-container" id="mySwiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="./images/banner1.jpg" />
+                        <div
+                            class="swiper-slide"
+                            v-for="(carousel, index) in bannerList"
+                            :key="carousel.id"
+                        >
+                            <img :src="carousel.imgUrl" />
                         </div>
-                      <!--   <div class="swiper-slide">
-                            <img src="./images/banner2.jpg" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./images/banner3.jpg" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./images/banner4.jpg" />
-                        </div> -->
+                       
                     </div>
+
                     <!-- 如果需要分页器 -->
                     <div class="swiper-pagination"></div>
 
@@ -115,8 +112,43 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import Swiper from 'swiper'
 export default {
-    name:'listContainer',
+    name: "listContainer",
+    mounted() {
+        this.$store.dispatch("getBannerList");
+    },
+    computed: {
+        ...mapState({
+            bannerList: (state) => state.home.bannerList,
+        }),
+    },
+    watch: {
+        bannerList: {
+            handler(newValue, oldValue) {
+                this.$nextTick(() => {
+                    var mySwiper = new Swiper(
+                        document.querySelector('.swiper-container'),
+                    {
+                        loop: true, // 循环模式选项
+
+                        // 如果需要分页器
+                        pagination: {
+                            el: ".swiper-pagination",
+                            clickable :true,
+                        },
+
+                        // 如果需要前进后退按钮
+                        navigation: {
+                            nextEl: ".swiper-button-next",
+                            prevEl: ".swiper-button-prev",
+                        },
+                    });
+                });
+            },
+        },
+    },
 };
 </script>
 
