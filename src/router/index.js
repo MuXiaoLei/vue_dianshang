@@ -18,6 +18,7 @@ VueRouter.prototype.push = function(location,res,rej){
         originPush.call(this,location,()=>{},()=>{});
     }
 }
+/* 重写replace方法 */
 VueRouter.prototype.replace = function(location,res,rej){
     if(res && rej){
         originReplace.call(this,location,res,rej);

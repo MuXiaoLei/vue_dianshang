@@ -5,8 +5,7 @@
         <todayRecommend/>
         <rank/>
         <like/>
-        <floor/>
-        <floor/>
+        <floor v-for="(carousel,id) in floorList" :key="carousel.id" :floorList='carousel'/>
         <brand/>
     </div>
 </template>
@@ -18,6 +17,8 @@ import rank from '@/pages/Home/rank'
 import like from '@/pages/Home/like'
 import floor from '@/pages/Home/floor'
 import brand from '@/pages/Home/brand'
+import {mapState} from 'vuex'
+
 export default {
     name:'Home',
     components:{
@@ -27,6 +28,14 @@ export default {
         like,
         floor,
         brand
+    },
+    mounted(){
+        this.$store.dispatch('getFloorList');
+    },
+    computed:{
+        ...mapState({
+            floorList:(state) => state.home.floorList,
+        })
     }
 }
 </script>
