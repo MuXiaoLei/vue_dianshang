@@ -1,7 +1,77 @@
 <template>
     <div class="type-nav">
         <div class="container">
-            <h2 class="all">全部商品分类</h2>
+            <div @mouseleave="moveIndex" @mouseenter="mouShow">
+                <h2 class="all">全部商品分类</h2>
+                <!-- 三级联动 -->
+                <transition name="sort">
+                    <div class="sort" v-show="eventShow">
+                    <div class="all-sort-list2" @click="goSearch">
+                        <div
+                            class="item"
+                            v-for="(c1, index) in categoryList"
+                            :key="c1.categoryId"
+                            :class="{ ctr: currendIndex === index }"
+                        >
+                            <h3 @mouseenter="chageIndex(index)">
+                                <a
+                                    :data-categoryName="c1.categoryName"
+                                    :data-category1id="c1.categoryId"
+                                    >{{ c1.categoryName }}</a
+                                >
+                            </h3>
+                            <div
+                                class="item-list clearfix"
+                                :style="{
+                                    display:
+                                        currendIndex === index
+                                            ? 'block'
+                                            : 'none',
+                                }"
+                            >
+                                <div
+                                    class="subitem"
+                                    v-for="(c2, index) in c1.categoryChild"
+                                    :key="c2.categoryId"
+                                >
+                                    <dl class="fore">
+                                        <dt>
+                                            <a
+                                                :data-categoryName="
+                                                    c2.categoryName
+                                                "
+                                                :data-category2id="
+                                                    c2.categoryId
+                                                "
+                                                >{{ c2.categoryName }}</a
+                                            >
+                                        </dt>
+                                        <dd>
+                                            <em
+                                                v-for="(
+                                                    c3, index
+                                                ) in c2.categoryChild"
+                                                :key="c3.categoryId"
+                                            >
+                                                <a
+                                                    :data-categoryName="
+                                                        c3.categoryName
+                                                    "
+                                                    :data-category3id="
+                                                        c3.categoryId
+                                                    "
+                                                    >{{ c3.categoryName }}</a
+                                                >
+                                            </em>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </transition>
+            </div>
             <nav class="nav">
                 <a href="###">服装城</a>
                 <a href="###">美妆馆</a>
@@ -12,50 +82,76 @@
                 <a href="###">有趣</a>
                 <a href="###">秒杀</a>
             </nav>
-            <div class="sort">
-                <div class="all-sort-list2">
-                    <div class="item" v-for='(c1,index) in categoryList' :key='c1.categoryId'>
-                        <h3>
-                            <a href="">{{c1.categoryName}}</a>
-                        </h3>
-                        <div class="item-list clearfix">
-                            <div class="subitem" v-for="(c2,index) in c1.categoryChild" :key="c2.categoryId">
-                                <dl class="fore">
-                                    <dt>
-                                        <a href="">{{c2.categoryName}}</a>
-                                    </dt>
-                                    <dd>
-                                        <em v-for="(c3,index) in c2.categoryChild" :key="c3.categoryId">
-                                            <a href="">{{c3.categoryName}}</a>
-                                        </em>
-                                       
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
+import throttle from "lodash/throttle";
 export default {
     name: "typeNav",
-    // 挂载完成，可以向服务器发送请求
-    mounted(){
-        // 获取数据存放到state仓库中
-        this.$store.dispatch('categoryList');
+    data() {
+        return {
+            currendIndex: -1,
+            eventShow: true,
+        };
     },
-    computed:{
+    // 挂载完成，可以向服务器发送请求
+    mounted() {
+        // 获取数据存放到state仓库中
+        // this.$store.dispatch("categoryList");
+        if (this.$route.path !== "/home") {
+            this.eventShow = false;
+        }
+    },
+    computed: {
         ...mapState({
-            categoryList:(state)=>{
+            categoryList: (state) => {
                 return state.home.categoryList;
+            },
+        }),
+    },
+    methods: {
+        chageIndex: throttle(function (index) {
+            this.currendIndex = index;
+        }, 50),
+        moveIndex() {
+            this.currendIndex = -1;
+            /* 鼠标移出让商品分类隐藏 */
+            if (this.$route.path != "/home") {
+                this.eventShow = false;
             }
-        })
-    }
+        },
+        /* 进行路由跳转的回调函数 */
+        goSearch(event) {
+            let ele = event.target;
+            let { categoryname, category1id, category2id, category3id } =
+                ele.dataset;
+            if (categoryname) {
+                let loction = { name: "search" };
+                let query = { categoryname: categoryname };
+                if (category1id) {
+                    query.category1id = category1id;
+                } else if (category2id) {
+                    query.category2id = category2id;
+                } else if (category3id) {
+                    query.category3id = category3id;
+                }
+                if(this.$route.params){
+                    loction.params = this.$route.params;
+                    loction.query = query;
+                    console.log(this.loction);
+                    this.$router.push(loction);
+                }
+            }
+        },
+        /* 鼠标移入让商品分类显示 */
+        mouShow() {
+            this.eventShow = true;
+            console.log(123);
+        },
+    },
 };
 </script>
 
@@ -103,7 +199,7 @@ export default {
             .all-sort-list2 {
                 .item {
                     h3 {
-                        line-height: 30px;
+                        line-height: 27px;
                         font-size: 14px;
                         font-weight: 400;
                         overflow: hidden;
@@ -168,14 +264,23 @@ export default {
                             }
                         }
                     }
-
-                    &:hover {
-                        .item-list {
-                            display: block;
-                        }
-                    }
+                .ctr {
+                    background-color: skyblue;
                 }
             }
+        }
+        }
+        /* 动画开始 */
+        .sort-enter{
+            height: 0px;
+        }
+        /* 动画结束 */
+        .sort-enter-to{
+            height: 461px;
+        }
+        /* 动画时间 速率 */
+        .sort-enter-active{
+            transition: all .5s linear;
         }
     }
 }

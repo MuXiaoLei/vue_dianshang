@@ -15,6 +15,9 @@ export default {
         HeadTop,
         Foot,
     },
+    mounted(){
+         this.$store.dispatch("categoryList");
+    },
 };
 </script>
 

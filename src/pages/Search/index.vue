@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div>
     <!-- <TypeNav /> -->
     <div class="main">
@@ -322,6 +323,10 @@
           </div>
         </div>
       </div>
+=======
+    <div>
+        <typeNav/>
+>>>>>>> typeNav
     </div>
   </div>
 </template>
