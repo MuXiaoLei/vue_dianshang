@@ -66,9 +66,9 @@ export default {
                     name:'search',
                     params:{ keyword:this.keyword || undefined }
                 };
-                /* console.log(this.loction); */
+                // console.log('dfsdf------'+this.loction);
                 loction.query = this.$route.query;
-                // console.log(loction);
+                // console.log('123-----'+loction.query);
                 this.$router.push(loction);
             }
         },

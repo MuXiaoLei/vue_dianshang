@@ -10,6 +10,7 @@ import store from './store'
 /* 引入mock模拟数据 */
 import '@/mock/mockServe'
 import 'swiper/css/swiper.css'
+
 Vue.config.productionTip = false
 
 

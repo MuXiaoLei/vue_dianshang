@@ -149,7 +149,6 @@ export default {
         /* 鼠标移入让商品分类显示 */
         mouShow() {
             this.eventShow = true;
-            console.log(123);
         },
     },
 };

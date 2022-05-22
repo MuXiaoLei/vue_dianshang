@@ -41,7 +41,7 @@ export default new VueRouter({
         },
         {
             name:'search',
-            path:'/search/:keyword?',
+            path:'/search/:keyword',
             component:Search,
             meta:{show:true},
         },
@@ -53,7 +53,7 @@ export default new VueRouter({
         /* 重定向 */
         {
             path:'/',
-            redirect:'/Home'
+            redirect:'/home'
         }
     ]
 })
