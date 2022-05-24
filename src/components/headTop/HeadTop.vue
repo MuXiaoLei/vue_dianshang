@@ -58,9 +58,8 @@ export default {
     },
     methods: {
         toSearch() {
-            console.log(this.keyword);
-            console.log(this.$route.query);
-            
+           /*  console.log(this.keyword);
+            console.log(this.$route.query); */ 
             if(this.$route.query){
                 let loction = {
                     name:'search',
@@ -73,6 +72,11 @@ export default {
             }
         },
     },
+    mounted(){
+        this.$bus.$on("clear",()=>{
+            this.keyword = '';
+        })
+    }
 };
 </script>
 
