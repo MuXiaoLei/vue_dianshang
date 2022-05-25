@@ -32,23 +32,19 @@
                     <div class="sui-navbar">
                         <div class="navbar-inner filter">
                             <ul class="sui-nav">
-                                <li class="active">
-                                    <a href="#">综合</a>
+                                <li :class="{active:isActiveOne}" @click="changOrder(1)">
+                                    <a>综合 
+                                        <span class="iconfont" 
+                                        :class="{'icon-arrow_up_fill':isIconUp,'icon-arrow_down':isIconDown}"
+                                        v-show="isActiveOne"></span>
+                                    </a>
                                 </li>
-                                <li>
-                                    <a href="#">销量</a>
-                                </li>
-                                <li>
-                                    <a href="#">新品</a>
-                                </li>
-                                <li>
-                                    <a href="#">评价</a>
-                                </li>
-                                <li>
-                                    <a href="#">价格⬆</a>
-                                </li>
-                                <li>
-                                    <a href="#">价格⬇</a>
+                                <li :class="{active:isActiveTwo}" @click="changOrder(2)">
+                                    <a >价格 
+                                        <span class="iconfont" 
+                                        :class="{'icon-arrow_up_fill':isIconUp,'icon-arrow_down':isIconDown}"
+                                        v-show="isActiveTwo"></span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -159,6 +155,7 @@ export default {
                 props: [],
                 trademark: "",
             },
+            origin:'2:asc'
         };
     },
     components: {
@@ -172,6 +169,18 @@ export default {
     },
     computed: {
         ...mapGetters(["goodsList"]),
+        isActiveOne(){
+            return this.origin.indexOf('1') != -1
+        },
+        isActiveTwo(){
+            return this.origin.indexOf('2') != -1
+        },
+        isIconUp(){
+            return this.origin.indexOf('asc') != -1
+        },
+        isIconDown(){
+            return this.origin.indexOf('desc') != -1
+        },
     },
     methods: {
         getData() {
@@ -212,6 +221,20 @@ export default {
         },
         moveProps(index){
             this.searchParams.props.splice(index,1);
+            this.getData();
+        },
+        /* 升序降序切换 */
+        changOrder(flag){
+            let originFlag = this.origin.split(":")[0];
+            let originText = this.origin.split(':')[1];
+            let newOrigin = '';
+            if(flag==originFlag){
+                newOrigin = `${originFlag}:${originText == 'asc'?'desc':'asc'}`;
+            }else{
+                newOrigin = `${flag}:${'asc'}`;
+            }
+            console.log(newOrigin);
+            this.origin = newOrigin;
             this.getData();
         }
     },

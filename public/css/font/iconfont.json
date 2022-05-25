@@ -1,0 +1,23 @@
+{
+  "id": "3428884",
+  "name": "电商图标",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5858607",
+      "name": "arrow_up_fill",
+      "font_class": "arrow_up_fill",
+      "unicode": "e817",
+      "unicode_decimal": 59415
+    },
+    {
+      "icon_id": "29992141",
+      "name": "arrow_up_fill",
+      "font_class": "arrow_down",
+      "unicode": "e818",
+      "unicode_decimal": 59416
+    }
+  ]
+}
