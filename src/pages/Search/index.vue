@@ -101,35 +101,13 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="fr page">
-                        <div class="sui-pagination clearfix">
-                            <ul>
-                                <li class="prev disabled">
-                                    <a href="#">«上一页</a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">1</a>
-                                </li>
-                                <li>
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
-                                <li>
-                                    <a href="#">4</a>
-                                </li>
-                                <li>
-                                    <a href="#">5</a>
-                                </li>
-                                <li class="dotted"><span>...</span></li>
-                                <li class="next">
-                                    <a href="#">下一页»</a>
-                                </li>
-                            </ul>
-                            <div><span>共10页&nbsp;</span></div>
-                        </div>
-                    </div>
+                    <!-- 分页器 -->
+                   <pagination 
+                   :pageNo='searchParams.pageNo' 
+                   :pagSize='searchParams.pageSize' 
+                   :total='total' 
+                   :continues='5'
+                   @getPagNo='getPagNo'/>
                 </div>
             </div>
         </div>
@@ -138,7 +116,7 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters ,mapState} from "vuex";
 export default {
     name: "Search",
     data() {
@@ -154,8 +132,8 @@ export default {
                 pageSize: 10,
                 props: [],
                 trademark: "",
+                origin:'1:asc'
             },
-            origin:'2:asc'
         };
     },
     components: {
@@ -169,17 +147,20 @@ export default {
     },
     computed: {
         ...mapGetters(["goodsList"]),
+        ...mapState({
+            total:(state)=>state.search.searchList.total
+        }),
         isActiveOne(){
-            return this.origin.indexOf('1') != -1
+            return this.searchParams.origin.indexOf('1') != -1
         },
         isActiveTwo(){
-            return this.origin.indexOf('2') != -1
+            return this.searchParams.origin.indexOf('2') != -1
         },
         isIconUp(){
-            return this.origin.indexOf('asc') != -1
+            return this.searchParams.origin.indexOf('asc') != -1
         },
         isIconDown(){
-            return this.origin.indexOf('desc') != -1
+            return this.searchParams.origin.indexOf('desc') != -1
         },
     },
     methods: {
@@ -225,8 +206,9 @@ export default {
         },
         /* 升序降序切换 */
         changOrder(flag){
-            let originFlag = this.origin.split(":")[0];
-            let originText = this.origin.split(':')[1];
+            let originFlag = this.searchParams.origin.split(":")[0];
+            let originText = this.searchParams.origin.split(':')[1];
+            console.log(originFlag);
             let newOrigin = '';
             if(flag==originFlag){
                 newOrigin = `${originFlag}:${originText == 'asc'?'desc':'asc'}`;
@@ -234,7 +216,12 @@ export default {
                 newOrigin = `${flag}:${'asc'}`;
             }
             console.log(newOrigin);
-            this.origin = newOrigin;
+            this.searchParams.origin = newOrigin;
+            this.getData();
+        },
+        /* 页码切换 */
+        getPagNo(page){
+            this.searchParams.pageNo = page;
             this.getData();
         }
     },
