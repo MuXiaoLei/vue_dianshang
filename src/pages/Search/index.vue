@@ -58,9 +58,9 @@
                             >
                                 <div class="list-wrap">
                                     <div class="p-img">
-                                        <a href="item.html" target="_blank">
-                                            <img :src="list.defaultImg"
-                                        /></a>
+                                        <router-link :to="`/detail/${list.id}`">
+                                            <img :src="list.defaultImg"/>
+                                        </router-link>
                                     </div>
                                     <div class="price">
                                         <strong>
@@ -69,12 +69,7 @@
                                         </strong>
                                     </div>
                                     <div class="attr">
-                                        <a
-                                            target="_blank"
-                                            href="item.html"
-                                            :title="list.title"
-                                            >{{ list.title }}</a
-                                        >
+                                        <a target="_blank" href="item.html" :title="list.title">{{ list.title }}</a>
                                     </div>
                                     <div class="commit">
                                         <i class="command"

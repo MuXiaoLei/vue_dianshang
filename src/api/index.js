@@ -10,3 +10,5 @@ export const reqGetFloorList = ()=>mockrequets.get('/floor');
 // 获取搜索模块数据接口
 export const reqGetSearchInfo = (params)=>requets({url:'list',method:'post',data:params});
 /* export const reqGetSearchInfo = (params)=>requets.post('/list',{data:params}); */
+/* Detail模块获取参数 */
+export const reqGetDetailInfo = (id)=>requets({url:`/item/${id}`,method:'get'});
