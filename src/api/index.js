@@ -12,3 +12,5 @@ export const reqGetSearchInfo = (params)=>requets({url:'list',method:'post',data
 /* export const reqGetSearchInfo = (params)=>requets.post('/list',{data:params}); */
 /* Detail模块获取参数 */
 export const reqGetDetailInfo = (id)=>requets({url:`/item/${id}`,method:'get'});
+/* 添加购物车 */
+export const reqAddcart = (skuId,skuNum)=>requets({url:`cart/addToCart/${ skuId }/${ skuNum }`,method:'post'})

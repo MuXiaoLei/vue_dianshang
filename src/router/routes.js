@@ -3,6 +3,7 @@ import Register from '@/pages/Register'
 import Login from '@/pages/Login'
 import Search from '@/pages/Search'
 import Detail from '@/pages/Detail'
+import AddCartSuccess from '@/pages/AddCartSuccess'
 
 export default[
     {
@@ -29,6 +30,12 @@ export default[
     {
         path:'/detail/:id',
         component:Detail,
+        meta:{show:true}
+    },
+    {
+        name:'addcartsuccess',
+        path:'/addcartsuccess',
+        component:AddCartSuccess,
         meta:{show:true}
     },
     /* 重定向 */

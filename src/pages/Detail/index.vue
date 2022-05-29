@@ -76,12 +76,12 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt">
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="detailNum" @change="butNum">
+                <a href="javascript:" class="plus" @click="detailNum++">+</a>
+                <a href="javascript:" class="mins" @click="detailNum<=1?detailNum=1:detailNum--">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -338,6 +338,11 @@
 
   export default {
     name: 'Detail',
+    data() {
+        return {
+            detailNum: 1,
+        };
+    },
     
     components: {
       ImageList,
@@ -362,6 +367,23 @@
             /* 点击那个产品,那个产品添加高亮 */
             value.isChecked = 1;
         },
+        butNum(event){
+            let val = event.target.value*1;
+            if(isNaN(val)||val<1){
+                this.detailNum = 1;
+            }else{
+                this.detailNum = parseInt(val);
+            }
+        },
+        /* 购物车向后台传输数据 */
+        async addCart(){
+            try{
+                await this.$store.dispatch('addCartList',{skuId:this.$route.params.id,skuNum:this.detailNum});
+                this.$router.push({name:'addcartsuccess'})
+            }catch{
+                console.log(error.message);
+            }
+        }
     },
   }
 </script>
