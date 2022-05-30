@@ -379,7 +379,8 @@
         async addCart(){
             try{
                 await this.$store.dispatch('addCartList',{skuId:this.$route.params.id,skuNum:this.detailNum});
-                this.$router.push({name:'addcartsuccess'})
+                this.$router.push({name:'addcartsuccess',query:{detailNum:this.detailNum}});
+                sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo));
             }catch{
                 console.log(error.message);
             }
