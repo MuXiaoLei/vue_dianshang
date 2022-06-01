@@ -1,6 +1,10 @@
 import { reqGetDetailInfo,reqAddcart } from "@/api";
+// 封装的游客身份模块
+import {getUUID} from '@/utils/uuid_token'
 const state = {
     detailList : {},
+    // 游客身份
+    uuid_token:getUUID(),
 };
 const mutations = {
     GETDETAILLIST(state,detailList){

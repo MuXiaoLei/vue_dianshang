@@ -4,6 +4,8 @@ import axios from 'axios'
 import nprogress from 'nprogress'
 // 引入进度条样式
 import 'nprogress/nprogress.css'
+//引入store模块
+import store from '@/store'
 
 const requets = axios.create({
     baseURL:'/api',
@@ -13,6 +15,9 @@ const requets = axios.create({
 /* 请求拦截器 */
 requets.interceptors.request.use((config)=>{
     nprogress.start();
+    if(store.state.detail.uuid_token){
+        config.headers.userTempId = store.state.detail.uuid_token;
+    }
     return config
 })
 

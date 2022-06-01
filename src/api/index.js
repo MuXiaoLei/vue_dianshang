@@ -8,9 +8,11 @@ export const reqGetBannerList = ()=>mockrequets.get('/banner');
 // 获取floor轮播图数据接口
 export const reqGetFloorList = ()=>mockrequets.get('/floor');
 // 获取搜索模块数据接口
-export const reqGetSearchInfo = (params)=>requets({url:'list',method:'post',data:params});
+export const reqGetSearchInfo = (params)=>requets({url:'/list',method:'post',data:params});
 /* export const reqGetSearchInfo = (params)=>requets.post('/list',{data:params}); */
 /* Detail模块获取参数 */
 export const reqGetDetailInfo = (id)=>requets({url:`/item/${id}`,method:'get'});
 /* 添加购物车 */
-export const reqAddcart = (skuId,skuNum)=>requets({url:`cart/addToCart/${ skuId }/${ skuNum }`,method:'post'})
+export const reqAddcart = (skuId,skuNum)=>requets({url:`/cart/addToCart/${ skuId }/${ skuNum }`,method:'post'});
+/* 获取购物车列表 */
+export const reqShopCart = ()=>requets({url:'/cart/cartList',method:'get'});

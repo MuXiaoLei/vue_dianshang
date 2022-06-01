@@ -11,24 +11,24 @@
         <div class="cart-th6">操作</div>
       </div>
       <div class="cart-body">
-        <ul class="cart-list">
+        <ul class="cart-list" v-for="(val,index) in cartInfoList" :key="val.id">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list">
+            <input type="checkbox" name="chk_list" :checked='val.isChecked==1'>
           </li>
           <li class="cart-list-con2">
-            <img src="./images/goods1.png">
-            <div class="item-msg">米家（MIJIA） 小米小白智能摄像机增强版 1080p高清360度全景拍摄AI增强</div>
+            <img :src="val.imgUrl">
+            <div class="item-msg">{{val.skuName}}</div>
           </li>
           <li class="cart-list-con4">
-            <span class="price">399.00</span>
+            <span class="price">{{val.skuPrice}}</span>
           </li>
           <li class="cart-list-con5">
             <a href="javascript:void(0)" class="mins">-</a>
-            <input autocomplete="off" type="text" value="1" minnum="1" class="itxt">
+            <input autocomplete="off" type="text" minnum="1" class="itxt" :value="val.skuNum">
             <a href="javascript:void(0)" class="plus">+</a>
           </li>
           <li class="cart-list-con6">
-            <span class="sum">399</span>
+            <span class="sum">{{val.skuPrice*val.skuNum}}</span>
           </li>
           <li class="cart-list-con7">
             <a href="#none" class="sindelet">删除</a>
@@ -36,13 +36,11 @@
             <a href="#none">移到收藏</a>
           </li>
         </ul>
-
-
       </div>
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox">
+        <input class="chooseAll" type="checkbox" :checked='isAllChecked'>
         <span>全选</span>
       </div>
       <div class="option">
@@ -55,7 +53,7 @@
           <span>0</span>件商品</div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
-          <i class="summoney">0</i>
+          <i class="summoney">{{totalPrice}}</i>
         </div>
         <div class="sumbtn">
           <a class="sum-btn" href="###" target="_blank">结算</a>
@@ -66,8 +64,35 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
   export default {
     name: 'ShopCart',
+    mounted(){
+        this.getData();
+        // this.$store.dispatch('getShopCart');
+    },
+    methods: {
+        getData() {
+            this.$store.dispatch('getShopCart');
+        },
+    },
+    computed:{
+        ...mapGetters(['cartList']),
+        cartInfoList(){
+            return this.cartList.cartInfoList||[];
+
+        },
+        totalPrice(){
+            let sum = 0;
+            this.cartInfoList.forEach(item=>{
+                sum+=item.skuPrice*item.skuNum;
+            });
+            return sum;
+        },
+        isAllChecked(){
+            return this.cartInfoList.every(item=>item.isChecked==1)
+        }
+    }
   }
 </script>
 

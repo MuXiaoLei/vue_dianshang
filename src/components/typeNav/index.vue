@@ -58,7 +58,7 @@ export default {
     // 挂载完成，可以向服务器发送请求
     mounted() {
         // 获取数据存放到state仓库中
-        // this.$store.dispatch("categoryList");
+        this.$store.dispatch("categoryList");
         if (this.$route.path !== "/home") {
             this.eventShow = false;
         }
