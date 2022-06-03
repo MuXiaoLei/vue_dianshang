@@ -16,3 +16,7 @@ export const reqGetDetailInfo = (id)=>requets({url:`/item/${id}`,method:'get'});
 export const reqAddcart = (skuId,skuNum)=>requets({url:`/cart/addToCart/${ skuId }/${ skuNum }`,method:'post'});
 /* 获取购物车列表 */
 export const reqShopCart = ()=>requets({url:'/cart/cartList',method:'get'});
+/* 删除购物车列表数据 */
+export const reqDeleteCar = (skuId)=>requets({url:`/cart/deleteCart/${skuId}`,method:'delete'});
+/* 修改购物车商品选中状态 */
+export const reqCheckCart = (skuId,isChecked)=>requets({url:`/cart/checkCart/${skuId}/${isChecked}`,method:'get'});
