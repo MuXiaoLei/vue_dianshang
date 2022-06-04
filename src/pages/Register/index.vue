@@ -15,25 +15,26 @@
         <label>验证码:</label>
         <input type="text" placeholder="请输入验证码" v-model="code">
         <!-- <img ref="code" src="http://182.92.128.115/api/user/passport/code" alt="code"> -->
+        <button style="width:80px;height:38px" @click="getCode">获取验证码</button>
         <span class="error-msg">错误提示信息</span>
       </div>
       <div class="content">
         <label>登录密码:</label>
-        <input type="text" placeholder="请输入你的登录密码">
+        <input type="text" placeholder="请输入你的登录密码" v-model="password">
         <span class="error-msg">错误提示信息</span>
       </div>
       <div class="content">
         <label>确认密码:</label>
-        <input type="text" placeholder="请输入确认密码">
+        <input type="text" placeholder="请输入确认密码" v-model="password1">
         <span class="error-msg">错误提示信息</span>
       </div>
       <div class="controls">
-        <input name="m1" type="checkbox">
+        <input name="m1" type="checkbox" :checked='agree'>
         <span>同意协议并注册《尚品汇用户协议》</span>
         <span class="error-msg">错误提示信息</span>
       </div>
       <div class="btn">
-        <button>完成注册</button>
+        <button @click="getRegister">完成注册</button>
       </div>
     </div>
 
@@ -61,9 +62,35 @@
     name: 'Register',
     data() {
         return {
-            phone: '',
+            phone:'',
             code:'',
+            password:'',
+            password1:'',
+            agree:true,
         };
+    },
+    methods: {
+        /* 获取验证码 */
+        async getCode() {
+            try {
+                const {phone} = this;
+                phone && await this.$store.dispatch('getUserCode',this.phone);
+                this.code = this.$store.state.user.userCode;
+                console.log( this.$store.state.user.userCode);
+            } catch (error) {
+                console.log(error.massage);
+            }
+        },
+        /*  注册用户 */
+        getRegister(){
+            try {
+                const {phone,code,password,password1} = this;
+                (phone && code && password == password1) && this.$store.dispatch('getUserRegister',{phone,password,code});
+                this.$router.push('/login');
+            } catch (error) {
+                console.log(error.massage);
+            }
+        },
     },
   }
 </script>

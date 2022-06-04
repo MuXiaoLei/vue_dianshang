@@ -20,3 +20,7 @@ export const reqShopCart = ()=>requets({url:'/cart/cartList',method:'get'});
 export const reqDeleteCar = (skuId)=>requets({url:`/cart/deleteCart/${skuId}`,method:'delete'});
 /* 修改购物车商品选中状态 */
 export const reqCheckCart = (skuId,isChecked)=>requets({url:`/cart/checkCart/${skuId}/${isChecked}`,method:'get'});
+/* 获取验证码 */
+export const reqUserCode = (phone)=>requets({url:`/user/passport/sendCode/${phone}`,method:'get'});
+/*  注册用户 */
+export const reqUserRegister = (data)=>requets({url:`user/passport/register`,data,method:'post'});
