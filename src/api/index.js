@@ -23,4 +23,10 @@ export const reqCheckCart = (skuId,isChecked)=>requets({url:`/cart/checkCart/${s
 /* 获取验证码 */
 export const reqUserCode = (phone)=>requets({url:`/user/passport/sendCode/${phone}`,method:'get'});
 /*  注册用户 */
-export const reqUserRegister = (data)=>requets({url:`user/passport/register`,data,method:'post'});
+export const reqUserRegister = (data)=>requets({url:`/user/passport/register`,data,method:'post'});
+/* 用户登录 */
+export const reqUserLogin = (data)=>requets({url:`/user/passport/login`,data,method:'post'});
+/* 获取用户信息 */
+export const reqUserList = ()=>requets({url:'/user/passport/auth/getUserInfo',method:'get'});
+/* 退出用户 */
+export const clearUserList = ()=>requets({url:'/user/passport/logout',method:'get'});
