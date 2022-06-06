@@ -93,7 +93,8 @@
                     <i class="summoney">{{ totalPrice }}</i>
                 </div>
                 <div class="sumbtn">
-                    <a class="sum-btn" href="###" target="_blank">结算</a>
+                    <!-- <a class="sum-btn" href="###" target="_blank">结算</a> -->
+                    <router-link class="sum-btn" to="trade">结算</router-link>
                 </div>
             </div>
         </div>
@@ -125,9 +126,7 @@ export default {
                     break;
                 case "up":
                     value =
-                        isNaN(value) || value < 1
-                            ? 0
-                            : parseInt(value) - val.skuNum;
+                        isNaN(value) || value < 1? 0: parseInt(value) - val.skuNum;
                     break;
             }
             try {

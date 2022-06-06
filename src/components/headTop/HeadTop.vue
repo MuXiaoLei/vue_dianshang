@@ -15,6 +15,7 @@
                         <span>{{userName}}</span>
                         <span class="register" @click="clearUser">退出登录</span>
                     </p>
+                    <p @click="clearUser">退出登录</p>
                 </div>
                 <div class="typeList">
                     <a href="###">我的订单</a>

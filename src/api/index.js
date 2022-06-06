@@ -30,3 +30,11 @@ export const reqUserLogin = (data)=>requets({url:`/user/passport/login`,data,met
 export const reqUserList = ()=>requets({url:'/user/passport/auth/getUserInfo',method:'get'});
 /* 退出用户 */
 export const clearUserList = ()=>requets({url:'/user/passport/logout',method:'get'});
+/* 获取用户地址信息 */
+export const reqUserAddress = ()=>requets({url:'/user/userAddress/auth/findUserAddressList',method:'get'});
+/* 获取订单详情 */
+export const reqTrade = ()=>requets({url:'/order/auth/trade',method:'get'});
+/* 提交订单 */
+export const reqPay = (tradeNo,data)=>requets({url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,data,method:'post'});
+/* 获取订单信息 */
+export const getOrderId = (orderId)=>requets({url:`/payment/weixin/createNative/${orderId}`,method:'get'});

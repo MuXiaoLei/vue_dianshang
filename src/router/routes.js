@@ -5,6 +5,8 @@ import Search from '@/pages/Search'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from '@/pages/ShopCart'
+import Trade from '@/pages/Trade'
+import Pay from '@/pages/Pay'
 
 export default[
     {
@@ -43,6 +45,18 @@ export default[
         name:'shopcart',
         path:'/shopcart',
         component:ShopCart,
+        meta:{show:true}
+    },
+    {
+        name:'trade',
+        path:'/trade',
+        component:Trade,
+        meta:{show:true}
+    },
+    {
+        name:'pay',
+        path:'/pay',
+        component:Pay,
         meta:{show:true}
     },
     /* 重定向 */
