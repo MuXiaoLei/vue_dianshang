@@ -11,11 +11,14 @@ import pagination from '@/components/pagination'
 /* 引入mock模拟数据 */
 import '@/mock/mockServe'
 import 'swiper/css/swiper.css'
+import * as API from '@/api'
+/* 引入element-ui */
+// import 'element-ui/lib/theme-chalk/index.css'
+import element from './element/index'
+Vue.use(element)
 
 
 Vue.config.productionTip = false
-
-
 
 Vue.component(typeNav.name,typeNav);
 Vue.component(Carousel.name,Carousel);
@@ -26,5 +29,6 @@ new Vue({
   store,
   beforeCreate(){
       Vue.prototype.$bus = this;
+      Vue.prototype.$API = API
   },
 }).$mount('#app')

@@ -38,3 +38,7 @@ export const reqTrade = ()=>requets({url:'/order/auth/trade',method:'get'});
 export const reqPay = (tradeNo,data)=>requets({url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,data,method:'post'});
 /* 获取订单信息 */
 export const getOrderId = (orderId)=>requets({url:`/payment/weixin/createNative/${orderId}`,method:'get'});
+/* 查询订单状态 */
+export const getPaySuccessOrderId = (orderId)=>requets({url:`/payment/weixin/queryPayStatus/${orderId}`,method:'get'});
+/* 获取订单列表 */
+export const getOrderLimit = (page,limit)=>requets({url:`/order/auth/${page}/${limit}`,method:'get'});

@@ -7,6 +7,10 @@ import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from '@/pages/ShopCart'
 import Trade from '@/pages/Trade'
 import Pay from '@/pages/Pay'
+import PaySuccess from '@/pages/PaySuccess'
+import Center from '@/pages/Center'
+import MyOrde from '@/pages/Center/MyOrde'
+import GroupOrde from '@/pages/Center/GroupOrde'
 
 export default[
     {
@@ -58,6 +62,32 @@ export default[
         path:'/pay',
         component:Pay,
         meta:{show:true}
+    },
+    {
+        name:'paysuccess',
+        path:'/paysuccess',
+        component:PaySuccess,
+        meta:{show:true}
+    },
+    {
+        name:'center',
+        path:'/center',
+        component:Center,
+        meta:{show:true},
+        children:[
+            {
+                path:'myorde',
+                component:MyOrde,
+            },
+            {
+                path:'grouporde',
+                component:GroupOrde,
+            },
+            {
+                path:'/center',
+                redirect:'/center/myorde'
+            }
+        ]
     },
     /* 重定向 */
     {

@@ -16,7 +16,7 @@
         <button @click="$emit('getPagNo',pageNo+1)" :disabled='pageNo==totalPag'>下一页</button>
 
         <button style="margin-left: 30px">共 {{total}} 条</button>
-        <h1>{{startPagAndEndPag}}---{{pageNo}}</h1>
+        <!-- <h1>{{startPagAndEndPag}}---{{pageNo}}</h1> -->
         
     </div>
 </template>

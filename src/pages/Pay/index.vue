@@ -65,7 +65,9 @@
         <div class="hr"></div>
 
         <div class="submit">
-          <router-link class="btn" to="/paysuccess">立即支付</router-link>
+          <!-- <router-link class="btn" to="/paysuccess" @click="open">立即支付</router-link> -->
+          <el-button type="text" class="btn" @click="open">立即支付</el-button>
+    
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -83,8 +85,15 @@
 
 <script>
 import {mapState} from 'vuex'
+import QRCode from 'qrcode'
   export default {
     name: 'Pay',
+    data() {
+        return {
+            timer: null,
+            code:'',
+        };
+    },
     computed: {
         ...mapState({payList:state=>state.pay.payList}),
         orderId() {
@@ -97,7 +106,47 @@ import {mapState} from 'vuex'
     methods:{
          getPayList(){
             this.$store.dispatch('getOrderId',this.orderId);
-        }
+        },
+        async open() {
+            let result = await QRCode.toDataURL(this.payList.codeUrl);
+            this.$alert(`<img src=${result}>`, '请微信支付', {
+            dangerouslyUseHTMLString: true,
+            showCancelButton:true,
+            center:true,
+            cancelButtonText:'支付遇见问题',
+            confirmButtonText:'支付成功',
+            showClose:false,
+            beforeClose:(action, instance, done)=>{
+                console.log(action);
+                if(action == 'cancel'){
+                    alert('请联系管理员');
+                    clearInterval(this.timer);
+                    this.timer = null;
+                    done();
+                }else{
+                    // if(this.code == 200){
+                         clearInterval(this.timer);
+                        this.timer = null;
+                        done();
+                        this.$router.push('/paysuccess');
+                    // }
+                }
+            }
+            });
+            if(!this.timer){
+                this.timer = setInterval(async ()=>{
+                    let result = await this.$API.getPaySuccessOrderId(this.orderId);
+                    console.log(result);
+                    if(result.code == 200){
+                        clearInterval(this.timer);
+                        this.timer = null;
+                        this.code = result.code;
+                        this.$msgbox.close();
+                        this.$router.push('/paysuccess');
+                    }
+                },1000)
+            }
+      }
     }
   }
 </script>
