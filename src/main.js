@@ -15,6 +15,10 @@ import * as API from '@/api'
 /* 引入element-ui */
 // import 'element-ui/lib/theme-chalk/index.css'
 import element from './element/index'
+/* 表单校验插件 */
+import '@/plugins/validate'
+
+
 Vue.use(element)
 
 
